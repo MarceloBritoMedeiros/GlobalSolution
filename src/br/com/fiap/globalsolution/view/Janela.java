@@ -1,6 +1,12 @@
 package br.com.fiap.globalsolution.view;
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 import br.com.fiap.globalsolution.controller.ButtonListener;
+import br.com.fiap.globalsolution.controller.Geocoder;
 import br.com.fiap.globalsolution.controller.TableListener;
 import br.com.fiap.globalsolution.dao.PostoDao;
 import br.com.fiap.globalsolution.model.Posto;
@@ -45,6 +52,7 @@ public class Janela {
 	JLabel state = new JLabel("Estado");
 	JTextField inputState = new JTextField();	
 	StarRater starrater = new StarRater(5);		
+	JLabel imagem = new JLabel(new ImageIcon("src/gas.png"));	
 	
 	JButton save = new JButton("Salvar");
 	JButton cancel = new JButton("Cancelar");	
@@ -63,6 +71,7 @@ public class Janela {
 	
 	public void init() {
 		page.setLayout(new BoxLayout(page, BoxLayout.X_AXIS));
+		page.add(imagem);
 		
 		inputText.setLayout(new BoxLayout(inputText, BoxLayout.Y_AXIS));
 		inputText.add(name);
@@ -105,6 +114,7 @@ public class Janela {
 		jFrame.add(page);
 		abas.addTab("Cadastro", page);
 		abas.addTab("Lista", new JScrollPane(tabela));		
+		abas.addTab("Mapa", new JPanel().add(returnMap()));
 		jFrame.add(abas);	
 		jFrame.setSize(600, 400);
 		
@@ -113,6 +123,7 @@ public class Janela {
 		tabela.setDefaultEditor(Object.class, null);
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		jFrame.setVisible(true);
+		jFrame.setIconImage(new ImageIcon("src/icon.png").getImage());
 	}
 	
 	public void carregarDados(boolean ordenar) {
@@ -127,6 +138,38 @@ public class Janela {
 		lista.forEach(posto -> tableModel.addRow(posto.getData()));
 	}
 
+	public JLabel returnMap() {
+		
+		try {
+			Geocoder g = new Geocoder();
+			System.out.println(g.GeocodeSync("11 Wall St, New York, NY 10005"));
+            String imageUrl = "https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyCJsbUtXNtbfAlKyRf8LpnNipunXu--kuE";
+            String destinationFile = "image.jpg";
+            String str = destinationFile;
+            URL url = new URL(imageUrl);
+            InputStream is = url.openStream();
+            OutputStream os = new FileOutputStream(destinationFile);
+            	
+            byte[] b = new byte[2048];
+            int length;
+
+            while ((length = is.read(b)) != -1) {
+                os.write(b, 0, length);
+            }
+
+            is.close();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return new JLabel(new ImageIcon((new ImageIcon("image.jpg")).getImage().getScaledInstance(630, 600,
+                java.awt.Image.SCALE_SMOOTH)));
+	}
+	
+	
+	
 	public JFrame getjFrame() {
 		return jFrame;
 	}
