@@ -18,6 +18,7 @@ public class Posto {
 	private String estado;
 	private String tipoPlug;
 	private int avaliacao;
+	private float price;
 	
 	public Long getId() {
 		return id;
@@ -68,6 +69,13 @@ public class Posto {
 		this.tipoPlug = tipoPlug;
 	}
 	
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	
 	public Vector<String> getData(){
 		Vector<String> data = new Vector<String>();
 		data.add(id.toString());
@@ -78,6 +86,7 @@ public class Posto {
 		data.add(estado);
 		data.add(tipoPlug);
 		data.add(Integer.toString(avaliacao));
+		data.add(String.format("%.02f", price));
 		return data;
 		
 	}

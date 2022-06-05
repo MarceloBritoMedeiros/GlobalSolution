@@ -35,7 +35,7 @@ import br.com.fiap.globalsolution.model.Posto;
 
 
 public class Janela {
-	JFrame jFrame = new JFrame("Gas Station Manager");		
+	JFrame jFrame = new JFrame("Recharge Station Manager");		
 	JTabbedPane abas = new JTabbedPane();
 	JPanel page = new JPanel();		
 	JPanel buttonBox = new JPanel();
@@ -51,13 +51,15 @@ public class Janela {
 	JTextField inputCity = new JTextField();
 	JLabel state = new JLabel("Estado");
 	JTextField inputState = new JTextField();	
+	JLabel price = new JLabel("Preço(KwH)");
+	JTextField inputPrice = new JTextField();	
 	StarRater starrater = new StarRater(5);		
 	JLabel imagem = new JLabel(new ImageIcon("src/gas.png"));	
 	
 	JButton save = new JButton("Salvar");
 	JButton cancel = new JButton("Cancelar");	
 	
-	String[] colunas = {"id", "nome","rua","bairro","cidade","estado", "tipo plug", "avaliação"};	
+	String[] colunas = {"id", "nome","rua","bairro","cidade","estado", "tipo plug", "avaliação", "preço"};	
 	JRadioButton tipo1 = new JRadioButton("tipo1");
 	JRadioButton tipo2 = new JRadioButton("tipo2");
 	JRadioButton css2 = new JRadioButton("CSS2");
@@ -83,8 +85,10 @@ public class Janela {
 		inputText.add(state);
 		inputText.add(inputState);		
 		inputText.add(city);
-		inputText.add(inputCity);		
-		inputText.setMaximumSize(new Dimension(200,210));	
+		inputText.add(inputCity);	
+		inputText.add(price);
+		inputText.add(inputPrice);
+		inputText.setMaximumSize(new Dimension(180,250));	
 		
 		buttonBox.setLayout(new BoxLayout(buttonBox, BoxLayout.X_AXIS));
 		ButtonListener botaoListener = new ButtonListener(this);		
@@ -93,14 +97,14 @@ public class Janela {
 		buttonBox.add(save);
 		buttonBox.add(cancel);
 		inputText.add(buttonBox);		
-		
+		radioBox.add(new JLabel("Tipos de Plug"));
 		radioBox.add(tipo1);
 		radioBox.add(tipo2);
 		radioBox.add(css2);
 		radioBox.add(chademo);			
 		radioBox.setLayout(new BoxLayout(radioBox, BoxLayout.Y_AXIS));		
 			
-		
+		radioBox.add(new JLabel("Avaliação"));
 		radioBox.add(starrater);
 		radioBox.setMaximumSize(new Dimension(200,150));
 		
@@ -113,7 +117,10 @@ public class Janela {
 		
 		jFrame.add(page);
 		abas.addTab("Cadastro", page);
-		abas.addTab("Lista", new JScrollPane(tabela));		
+		JPanel listaPanel =  new JPanel();
+		listaPanel.add(new JLabel("Clique duas vezes para ordenar por estado"));
+		listaPanel.add(new JScrollPane(tabela));
+		abas.addTab("Lista", listaPanel);		
 		abas.addTab("Mapa", new JPanel().add(returnMap()));
 		jFrame.add(abas);	
 		jFrame.setSize(600, 400);
@@ -377,6 +384,22 @@ public class Janela {
 
 	public void setChademo(JRadioButton chademo) {
 		this.chademo = chademo;
+	}
+
+	public JLabel getPrice() {
+		return price;
+	}
+
+	public void setPrice(JLabel price) {
+		this.price = price;
+	}
+
+	public JTextField getInputPrice() {
+		return inputPrice;
+	}
+
+	public void setInputPrice(JTextField inputPrice) {
+		this.inputPrice = inputPrice;
 	}	
 	
 	

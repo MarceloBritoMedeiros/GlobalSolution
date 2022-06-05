@@ -27,6 +27,7 @@ public class ButtonListener implements ActionListener {
 		posto.setCidade(new String(view.getInputCity().getText()));
 		posto.setEstado(new String(view.getInputState().getText()));		
 		posto.setAvaliacao(view.getStarrater().getSelection());
+		posto.setPrice(Float.parseFloat(view.getInputPrice().getText()));
 		JRadioButton radios[] = {view.getTipo1(), view.getTipo2(), view.getChademo(), view.getCss2()};
 		String tipoPlug = "";
 		for(int i=0;i<4;i++) {

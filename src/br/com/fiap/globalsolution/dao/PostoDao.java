@@ -27,7 +27,7 @@ public class PostoDao {
 	}
 	
 	public List<Posto> ordenarTodos(){
-		String jpql = "SELECT p FROM Posto p order by estado desc";
+		String jpql = "SELECT p FROM Posto p order by estado";
 		TypedQuery<Posto> query = manager.createQuery(jpql, Posto.class);
 		return query.getResultList();
 	}
